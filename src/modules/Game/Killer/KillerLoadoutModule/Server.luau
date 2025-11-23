@@ -1,17 +1,19 @@
 local ServerStorage = game:GetService("ServerStorage")
-local ReplicatedStorage = game:GetService("ReplicatedStorage")
+local ServerScriptService = game:GetService("ServerScriptService")
+
+local PlayerDataService = require(ServerScriptService.Services.PlayerDataService.PlayerDataServiceServer)
 
 local KillerLoadout = {}
 
 function KillerLoadout.Apply(player)
 	player:SetAttribute("IsKiller", true)
-
+	local equipped = PlayerDataService:GetEquipped(player)
 	local char = player.Character
 	if not char then
 		return
 	end
 
-	local killerId = player:GetAttribute("EquippedKiller") or "1"
+	local killerId = equipped["Killer"] or "1"
 	local killerModel = ServerStorage.KillerModel:FindFirstChild(killerId)
 
 	if not killerModel then

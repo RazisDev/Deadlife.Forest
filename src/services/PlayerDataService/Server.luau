@@ -149,21 +149,22 @@ function PlayerDataServiceServer:_onJoin(player)
 
 	profile:Reconcile()
 	self.Profiles[player] = profile
-	print(RunService:IsStudio())
 	if RunService:IsStudio() then
-		profile.Data.Killer = ServerDataTemplate.Killer
+		--profile.Data.Killer = ServerDataTemplate.Killer
 		profile.Data.Passive = ServerDataTemplate.Passive
 		--profile.Data.Equipped.Passive = ServerDataTemplate.Equipped.Passive
 		player:SetAttribute("Money", 100000 or 0)
 		player:SetAttribute("Dosa", 10000 or 0)
 		player:SetAttribute("Level", 10000 or 1)
 		player:SetAttribute("ProfileReady", true)
+		player:SetAttribute("EquippedKiller", profile.Data.Equipped.Killer)
 	else
 		local d = profile.Data
 		player:SetAttribute("Money", d.Money or 0)
 		player:SetAttribute("Dosa", d.Dosa or 0)
 		player:SetAttribute("Level", d.Level or 1)
 		player:SetAttribute("ProfileReady", true)
+		player:SetAttribute("EquippedKiller", d.Equipped.Killer)
 	end
 end
 
