@@ -4,7 +4,7 @@ local ModuleLoader = require(ReplicatedStorage.Shared.Loader.ModuleLoader)
 
 -- you can optionally modify settings (also change it via the attributes on ModuleLoader)
 ModuleLoader.ChangeSettings({
-	FOLDER_SEARCH_DEPTH = 1,
+	FOLDER_SEARCH_DEPTH = 2,
 	YIELD_THRESHOLD = 10,
 	VERBOSE_LOADING = true,
 	WAIT_FOR_SERVER = true,

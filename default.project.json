@@ -6,34 +6,37 @@
       "Shared": {
         "$className": "Folder",
         "Services": {
-          "$className": "Folder",
-          "ExampleService": {
-            "$className": "Folder",
-            "ExampleServiceClient": {
-              "$path": "src/services/ExampleService/Client.luau"
-            },
-            "ExampleServiceUtils": {
-              "$path": "src/services/ExampleService/Utils.luau"
-            }
-          },
-          "ShopService": {
-            "$className": "Folder",
-            "ShopServiceClient": {
-              "$path": "src/services/ShopService/Client.luau"
-            }
-          },
-          "TpService": {
-            "$className": "Folder",
-            "TpServiceClient": {
-              "$path": "src/services/tpService/Client.luau"
-            }
-          }
+          "$className": "Folder"
         },
         "Classes": {
           "$className": "Folder"
         },
         "Modules": {
-          "$className": "Folder"
+          "$className": "Folder",
+          "Enums": {
+            "$className": "Folder",
+            "DataActionEnum": {
+              "$path": "src/modules/Enums/DataActionEnum.luau"
+            },
+            "GameCommunicationEnum": {
+              "$path": "src/modules/Enums/GameCommunicationEnum.luau"
+            },
+            "GuiActionsEnum": {
+              "$path": "src/modules/Enums/GuiActionsEnum.luau"
+            },
+            "RoleEnum": {
+              "$path": "src/modules/Enums/RoleEnum.luau"
+            }
+          },
+          "Game": {
+            "$className": "Folder",
+            "Passive": {
+              "$className": "Folder",
+              "SkillPassives": {
+                "$path": "src/modules/Game/Passive/SkillPassives.luau"
+              }
+            }
+          }
         },
         "Loader": {
           "$className": "Folder",
@@ -55,10 +58,31 @@
       },
       "Services": {
         "$className": "Folder",
-        "ExampleService": {
+        "GameService": {
           "$className": "Folder",
-          "ExampleServiceServer": {
-            "$path": "src/services/ExampleService/Server.luau"
+          "GameServiceServer": {
+            "$path": "src/services/GameService/Server.luau"
+          }
+        },
+        "PassiveService": {
+          "$className": "Folder",
+          "PassiveServiceServer": {
+            "$path": "src/services/PassiveService/Server.luau"
+          }
+        },
+        "PlayerDataService": {
+          "$className": "Folder",
+          "PlayerDataServiceServer": {
+            "$path": "src/services/PlayerDataService/Server.luau"
+          },
+          "ServerDataTemplate": {
+            "$path": "src/services/PlayerDataService/ServerDataTemplate.luau"
+          }
+        },
+        "PlayerJoinedService": {
+          "$className": "Folder",
+          "PlayerJoinedServiceServer": {
+            "$path": "src/services/PlayerJoinedService/Server.luau"
           }
         }
       },
@@ -66,7 +90,43 @@
         "$className": "Folder"
       },
       "Modules": {
-        "$className": "Folder"
+        "$className": "Folder",
+        "Game": {
+          "$className": "Folder",
+          "GameSection": {
+            "$className": "Folder",
+            "GameSectionServer": {
+              "$path": "src/modules/Game/GameSection/Server.luau"
+            }
+          },
+          "Killer": {
+            "$className": "Folder",
+            "KillerLoadoutModule": {
+              "$className": "Folder",
+              "KillerLoadoutModuleServer": {
+                "$path": "src/modules/Game/Killer/KillerLoadoutModule/Server.luau"
+              }
+            }
+          },
+          "RoleModule": {
+            "$className": "Folder",
+            "RoleModuleServer": {
+              "$path": "src/modules/Game/RoleModule/Server.luau"
+            }
+          },
+          "Survivor": {
+            "$className": "Folder",
+            "SurvivorLoadoutModule": {
+              "$className": "Folder",
+              "SurvivorLoadoutModuleServer": {
+                "$path": "src/modules/Game/Survivor/SurvivorLoadoutModule/Server.luau"
+              }
+            }
+          }
+        }
+      },
+      "ServerPackages": {
+        "$path": "ServerPackages"
       }
     },
     "StarterPlayer": {
