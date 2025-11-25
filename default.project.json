@@ -9,7 +9,31 @@
           "$className": "Folder"
         },
         "Classes": {
-          "$className": "Folder"
+          "$className": "Folder",
+          "KillerSkills": {
+            "$className": "Folder",
+            "KillerSkillRegistry": {
+              "$path": "src/classes/KillerSkills/KillerSkillRegistry.luau"
+            },
+            "ShadowVeil": {
+              "$path": "src/classes/KillerSkills/ShadowVeil.luau"
+            },
+            "_BaseKillerSkills": {
+              "$path": "src/classes/KillerSkills/_BaseKillerSkills.luau"
+            }
+          },
+          "Roles": {
+            "$className": "Folder",
+            "KillerRole": {
+              "$path": "src/classes/Roles/KillerRole.luau"
+            },
+            "SurvivorRole": {
+              "$path": "src/classes/Roles/SurvivorRole.luau"
+            },
+            "_BaseRole": {
+              "$path": "src/classes/Roles/_BaseRole.luau"
+            }
+          }
         },
         "Modules": {
           "$className": "Folder",
@@ -62,6 +86,12 @@
           "$className": "Folder",
           "GameServiceServer": {
             "$path": "src/services/GameService/Server.luau"
+          }
+        },
+        "KillerSkillService": {
+          "$className": "Folder",
+          "KillerSkillServiceServer": {
+            "$path": "src/services/KillerSkillService/Server.luau"
           }
         },
         "PassiveService": {

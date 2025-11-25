@@ -3,60 +3,46 @@ local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local ServerScriptService = game:GetService("ServerScriptService")
 local ServerStorage = game:GetService("ServerStorage")
 
-local Sections = require(ServerScriptService.Modules.Game.GameSection.GameSectionServer)
 local RoleModule = require(ServerScriptService.Modules.Game.RoleModule.RoleModuleServer)
-local KillerLoadout = require(ServerScriptService.Modules.Game.Killer.KillerLoadoutModule.KillerLoadoutModuleServer)
-local SurvivorLoadout =
-	require(ServerScriptService.Modules.Game.Survivor.SurvivorLoadoutModule.SurvivorLoadoutModuleServer)
-
+local BaseRole = require(ReplicatedStorage.Shared.Classes.Roles._BaseRole)
 local MatchEvent = ReplicatedStorage.Events.Remotes.MatchEvent
 local startGameEvent = ServerStorage.Events.Bindables.StartGame
 
 -- Your existing event/services
 local playersLoadedEvent = ReplicatedStorage.Events.Remotes.PlayerLoaded
-local gameCommsEvent = ReplicatedStorage.Events.Remotes.GameCommunication
 
-local GameCommsEnum = require(ReplicatedStorage.Shared.Modules.Enums.GameCommunicationEnum)
+local GameServiceServer = {}
+GameServiceServer.Roles = {} :: { [Player]: BaseRole.Role }
 
-local MatchService = {}
-MatchService.Roles = {}
-
-function MatchService:Init()
+function GameServiceServer:Init()
 	startGameEvent.Event:Connect(function()
 		self:OnStartMatch()
 	end)
 end
 
-function MatchService:OnStartMatch()
+function GameServiceServer:OnStartMatch()
 	print("[MatchService] All players loaded. Starting Match.")
 
 	local players = Players:GetPlayers()
-
-	-- Assign roles
 	self.Roles = RoleModule.Assign(players)
 
-	-- Apply loadouts
-	for player, role in pairs(self.Roles) do
-		if role == "Killer" then
-			KillerLoadout.Apply(player)
-		else
-			SurvivorLoadout.Apply(player)
-		end
+	-- Assign roles (random or fixed)
+	for _, role in pairs(self.Roles) do
+		role:Apply()
 	end
 
-	-- Notify clients (You are Killer/Survivor)
-	for player, role in pairs(self.Roles) do
+	-- Notify client of assigned role
+	for player, roleObject in pairs(self.Roles) do
 		MatchEvent:FireClient(player, "RoleAssigned", {
-			role = role,
+			role = roleObject.roleName, -- "Killer" or "Survivor"
 		})
 	end
 
-	-- Continue to actual round intro
 	self:StartRound()
 end
 
-function MatchService:StartRound()
-	print("[MatchService] Round has started!")
+function GameServiceServer:StartRound()
+	print("[GameServiceServer] Round has started!")
 
 	--🔥 Your existing startGame() moved here
 	warn("The game is starting.")
@@ -68,4 +54,4 @@ function MatchService:StartRound()
 	--gameCommsEvent:FireAllClients(GameCommsEnum.ToClient.StartIntroScene, { Bus = workspace.Outdoor.Bus })
 end
 
-return MatchService
+return GameServiceServer

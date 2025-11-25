@@ -15,34 +15,16 @@ local PlayerJoinedService = {}
 
 local startGameEvent = ServerStorage.Events.Bindables.StartGame
 local playerLoadedEvent = ReplicatedStorage.Events.Remotes.PlayerLoaded
-local updateGuiEvent = ReplicatedStorage.Events.Remotes.UpdateGui
-local GuiActionsEnum = require(ReplicatedStorage.Shared.Modules.Enums.GuiActionsEnum)
 
 local teleportData
-
 local playersInGame = 0
 local expectedPlayers = 0
 local timeElapsed = 0
 local loadedPlayers = {}
 
--- CONSTANT --
-local RENT_OWED = 500
-
 -----------------------------
 -- PRIVATE FUNCTIONS --
 -----------------------------
-local function argMatchesType(arg: any, expectedType: string): boolean
-	if typeof(expectedType) ~= "string" then
-		error(("Expected type 'string' for expectedType, got %s instead."):format(typeof(expectedType)))
-	end
-
-	if typeof(arg) ~= "Instance" and typeof(arg) ~= expectedType then
-		return false
-	elseif typeof(arg) == "Instance" and not arg:IsA(expectedType) then
-		return false
-	end
-	return true
-end
 
 local function startGame()
 	startGameEvent:Fire()
@@ -58,26 +40,6 @@ local function onDescendantAdded(descendant)
 	if descendant:IsA("BasePart") then
 		descendant.CollisionGroup = "Player"
 	end
-end
-
-local function createLeaderstats(player: Player)
-	local leaderstats = Instance.new("Folder")
-	leaderstats.Name = "leaderstats"
-	leaderstats.Parent = player
-	local money = Instance.new("IntValue")
-	money.Name = "Money"
-	money.Value = 0
-	money.Parent = leaderstats
-	local deaths = Instance.new("IntValue")
-	deaths.Name = "Deaths"
-	deaths.Value = 0
-	deaths.Parent = leaderstats
-
-	money:GetPropertyChangedSignal("Value"):Connect(function()
-		if money.Value >= RENT_OWED then
-			updateGuiEvent:FireClient(player, GuiActionsEnum.ObjectiveFulfilled, { FulfilledObjectiveName = "Money" })
-		end
-	end)
 end
 
 local function onCharacterAdded(character)
@@ -102,7 +64,6 @@ local function onPlayerAdded(player: Player)
 	playersInGame += 1
 	print(playersInGame)
 	player.CharacterAdded:Connect(onCharacterAdded)
-	createLeaderstats(player)
 
 	if teleportData then
 		return
