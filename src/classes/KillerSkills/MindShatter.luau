@@ -1,22 +1,22 @@
 --!strict
 local Registry = require(script.Parent.KillerSkillRegistry)
 
-local ShadowVeil = {}
-ShadowVeil.__index = ShadowVeil
-ShadowVeil.Name = "ShadowVeil" -- Optional, used by auto-registration
+local MindShatter = {}
+MindShatter.__index = MindShatter
+MindShatter.Name = "MindShatter" -- Optional, used by auto-registration
 
 local DURATIONS = { 5, 10, 15 }
 local COOLDOWNS = { 30, 25, 20 }
 
-function ShadowVeil.new(player: Player, tier: number)
+function MindShatter.new(player: Player, tier: number)
 	local self = {
 		player = player,
 		tier = tier,
 	}
-	return setmetatable(self, ShadowVeil)
+	return setmetatable(self, MindShatter)
 end
 
-function ShadowVeil:Activate()
+function MindShatter:Activate()
 	local char = self.player.Character
 	if not char then
 		return
@@ -46,15 +46,15 @@ function ShadowVeil:Activate()
 	end)
 end
 
-function ShadowVeil:GetCooldown()
+function MindShatter:GetCooldown()
 	return COOLDOWNS[self.tier]
 end
 
-function ShadowVeil:GetDescription()
+function MindShatter:GetDescription()
 	local d = DURATIONS[self.tier]
 	return `Become invisible for {d} seconds.`
 end
 
-Registry:Register("ShadowVeil", ShadowVeil)
-print("Registry ShadowVeil")
-return ShadowVeil
+Registry:Register("MindShatter", MindShatter)
+print("Registry MindShatter")
+return MindShatter

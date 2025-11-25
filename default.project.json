@@ -15,11 +15,17 @@
             "KillerSkillRegistry": {
               "$path": "src/classes/KillerSkills/KillerSkillRegistry.luau"
             },
+            "MindShatter": {
+              "$path": "src/classes/KillerSkills/MindShatter.luau"
+            },
+            "PhantomClone": {
+              "$path": "src/classes/KillerSkills/PhantomClone.luau"
+            },
             "ShadowVeil": {
               "$path": "src/classes/KillerSkills/ShadowVeil.luau"
             },
-            "_BaseKillerSkills": {
-              "$path": "src/classes/KillerSkills/_BaseKillerSkills.luau"
+            "SoulTrap": {
+              "$path": "src/classes/KillerSkills/SoulTrap.luau"
             }
           },
           "Roles": {
@@ -129,28 +135,10 @@
               "$path": "src/modules/Game/GameSection/Server.luau"
             }
           },
-          "Killer": {
-            "$className": "Folder",
-            "KillerLoadoutModule": {
-              "$className": "Folder",
-              "KillerLoadoutModuleServer": {
-                "$path": "src/modules/Game/Killer/KillerLoadoutModule/Server.luau"
-              }
-            }
-          },
           "RoleModule": {
             "$className": "Folder",
             "RoleModuleServer": {
               "$path": "src/modules/Game/RoleModule/Server.luau"
-            }
-          },
-          "Survivor": {
-            "$className": "Folder",
-            "SurvivorLoadoutModule": {
-              "$className": "Folder",
-              "SurvivorLoadoutModuleServer": {
-                "$path": "src/modules/Game/Survivor/SurvivorLoadoutModule/Server.luau"
-              }
             }
           }
         }

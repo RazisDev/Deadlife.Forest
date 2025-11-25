@@ -1,9 +1,7 @@
-local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local ServerScriptService = game:GetService("ServerScriptService")
 local ServerStorage = game:GetService("ServerStorage")
 local StarterPlayer = game:GetService("StarterPlayer")
 
-local BaseRole = require(script.Parent._BaseRole)
 local KillerSkillService = require(ServerScriptService.Services.KillerSkillService.KillerSkillServiceServer)
 local ServerDataTemplate = require(ServerScriptService.Services.PlayerDataService.ServerDataTemplate)
 
@@ -12,17 +10,15 @@ type playerLevelType = typeof(ServerDataTemplate.Level)
 
 local KillerRole = {}
 KillerRole.__index = KillerRole
-setmetatable(KillerRole, BaseRole)
 
 function KillerRole.new(player: Player, killerId: string, abilities: { KillerAbilityData }, Level: playerLevelType)
 	local self = {
-		BaseRole = BaseRole.new(player),
+		player = player,
 		killerId = killerId,
 		abilities = abilities,
-		roleName = "Killer",
+		roleName = "killer",
 		Level = Level,
 	}
-
 	setmetatable(self, KillerRole)
 	return self
 end
@@ -81,9 +77,14 @@ function KillerRole:ApplyLoadout()
 end
 
 function KillerRole:ApplyAbilities()
+	print("apply skill run")
 	for slot, ability in ipairs(self.abilities) do
-		if ability.Unlocked then
+		print("Requirement:", ability.Requirement, "Player Level:", self.Level)
+		print("UNLOCKED:", ability.Name)
+		if self.Level >= ability.Requirement then
 			KillerSkillService:AssignSkill(self.player, slot, ability.Name, ability.Tier)
+		else
+			print("LOCKED:", ability.Name)
 		end
 	end
 end

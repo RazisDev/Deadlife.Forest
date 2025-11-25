@@ -50,7 +50,7 @@ function PlayerDataServiceServer:Get(player)
 	if not ok then
 		return profile
 	end
-	return true, profile.Data
+	return profile.Data
 end
 
 function PlayerDataServiceServer:GetKiller(player)

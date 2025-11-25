@@ -7,10 +7,8 @@ local KillerRole = require(ReplicatedStorage.Shared.Classes.Roles.KillerRole)
 local SurvivorRole = require(ReplicatedStorage.Shared.Classes.Roles.SurvivorRole)
 local DataTemplate = require(ServerScriptService.Services.PlayerDataService.ServerDataTemplate)
 local PlayerDataService = require(ServerScriptService.Services.PlayerDataService.PlayerDataServiceServer)
-local BaseRole = require(ReplicatedStorage.Shared.Classes.Roles._BaseRole)
 
 type PlayerData = DataTemplate.PlayerData
-type Role = BaseRole.Role
 
 local RoleModule = {}
 
@@ -21,8 +19,8 @@ local function getPlayerData(player: Player): PlayerData
 	return data :: PlayerData
 end
 
-function RoleModule.Assign(players: { Player }): { [Player]: Role }
-	local roles: { [Player]: Role } = {}
+function RoleModule.Assign(players: { Player }): { [Player]: Player }
+	local roles: { [Player]: Player } = {}
 
 	if #players == 0 then
 		return roles
@@ -35,7 +33,9 @@ function RoleModule.Assign(players: { Player }): { [Player]: Role }
 	for _, player in ipairs(players) do
 		local playerData = getPlayerData(player)
 		local killerId = playerData.Equipped.Killer
-		local abilities = playerData.Killer[killerId]
+		local killerData = playerData.Killer[killerId]
+		local abilities = killerData.Abilities
+
 		local playerLevel = playerData.Level
 		if player == killerPlayer then
 			local killerRole = KillerRole.new(player, killerId, abilities, playerLevel)
