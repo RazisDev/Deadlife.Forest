@@ -6,7 +6,13 @@
       "Shared": {
         "$className": "Folder",
         "Services": {
-          "$className": "Folder"
+          "$className": "Folder",
+          "InputService": {
+            "$className": "Folder",
+            "InputServiceClient": {
+              "$path": "src/services/InputService/Client.luau"
+            }
+          }
         },
         "Classes": {
           "$className": "Folder",
@@ -90,6 +96,9 @@
         "$className": "Folder",
         "GameService": {
           "$className": "Folder",
+          "GameServiceServerRoleUtils": {
+            "$path": "src/services/GameService/GameServiceServerRoleUtils.luau"
+          },
           "GameServiceServer": {
             "$path": "src/services/GameService/Server.luau"
           }

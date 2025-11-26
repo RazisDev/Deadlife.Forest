@@ -3,7 +3,7 @@ local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local ServerScriptService = game:GetService("ServerScriptService")
 local ServerStorage = game:GetService("ServerStorage")
 
-local RoleModule = require(ServerScriptService.Modules.Game.RoleModule.RoleModuleServer)
+local GameServiceServeRoleUtils = require(ServerScriptService.Services.GameService.GameServiceServerRoleUtils)
 local BaseRole = require(ReplicatedStorage.Shared.Classes.Roles._BaseRole)
 local MatchEvent = ReplicatedStorage.Events.Remotes.MatchEvent
 local startGameEvent = ServerStorage.Events.Bindables.StartGame
@@ -24,7 +24,7 @@ function GameServiceServer:OnStartMatch()
 	print("[MatchService] All players loaded. Starting Match.")
 
 	local players = Players:GetPlayers()
-	self.Roles = RoleModule.Assign(players)
+	self.Roles = GameServiceServeRoleUtils.Assign(players)
 
 	-- Assign roles (random or fixed)
 	for _, role in pairs(self.Roles) do

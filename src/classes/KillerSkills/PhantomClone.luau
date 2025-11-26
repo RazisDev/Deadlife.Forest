@@ -3,7 +3,6 @@ local Registry = require(script.Parent.KillerSkillRegistry)
 
 local PhantomClone = {}
 PhantomClone.__index = PhantomClone
-PhantomClone.Name = "PhantomClone" -- Optional, used by auto-registration
 
 local DURATIONS = { 5, 10, 15 }
 local COOLDOWNS = { 30, 25, 20 }
@@ -12,37 +11,75 @@ function PhantomClone.new(player: Player, tier: number)
 	local self = {
 		player = player,
 		tier = tier,
+		isCooldown = false,
+		cooldownRemaining = 0,
+		_originalTransparency = {},
 	}
 	return setmetatable(self, PhantomClone)
 end
 
 function PhantomClone:Activate()
+	if self.isCooldown then
+		return
+	end
+
 	local char = self.player.Character
 	if not char then
 		return
 	end
 
-	local duration = DURATIONS[self.tier]
+	-- START COOLDOWN
+	self.isCooldown = true
+	self.cooldownRemaining = COOLDOWNS[self.tier]
+	self:_startCooldownWorker()
 
-	-- Make invisible
+	-- APPLY INVISIBILITY
+	local duration = DURATIONS[self.tier]
+	self._originalTransparency = {}
+
 	for _, part in ipairs(char:GetDescendants()) do
 		if part:IsA("BasePart") then
-			part.Transparency = 1
+			-- Save original transparency
+			self._originalTransparency[part] = part.Transparency
+
+			if part.Name == "HumanoidRootPart" then
+				continue
+			end
+
+			part.Transparency = 0.8
 		end
 	end
 
-	-- Restore transparency
+	-- RESTORE AFTER DURATION
 	task.delay(duration, function()
-		local char2 = self.player.Character
-		if not char2 then
+		local newChar = self.player.Character
+		if not newChar then
 			return
 		end
 
-		for _, p in ipairs(char2:GetDescendants()) do
-			if p:IsA("BasePart") then
-				p.Transparency = 0
+		for part, old in pairs(self._originalTransparency) do
+			if part and part.Parent then
+				part.Transparency = old
 			end
 		end
+	end)
+end
+
+-- Cooldown ticking in background
+function PhantomClone:_startCooldownWorker()
+	task.spawn(function()
+		while self.cooldownRemaining > 0 do
+			self.cooldownRemaining -= 1
+
+			print("Cooldown:", self.cooldownRemaining)
+
+			-- If you want UI update:
+			-- RemoteEvent:FireClient(self.player, "UpdateCooldown", "PhantomClone", self.cooldownRemaining)
+
+			task.wait(1)
+		end
+
+		self.isCooldown = false
 	end)
 end
 
@@ -51,10 +88,8 @@ function PhantomClone:GetCooldown()
 end
 
 function PhantomClone:GetDescription()
-	local d = DURATIONS[self.tier]
-	return `Become invisible for {d} seconds.`
+	return `Become invisible for {DURATIONS[self.tier]} seconds.`
 end
 
 Registry:Register("PhantomClone", PhantomClone)
-print("Registry PhantomClone")
 return PhantomClone
