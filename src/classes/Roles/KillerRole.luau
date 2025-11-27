@@ -1,6 +1,7 @@
 local ServerScriptService = game:GetService("ServerScriptService")
 local ServerStorage = game:GetService("ServerStorage")
 local StarterPlayer = game:GetService("StarterPlayer")
+local Workspace = game:GetService("Workspace")
 
 local KillerSkillService = require(ServerScriptService.Services.KillerSkillService.KillerSkillServiceServer)
 local ServerDataTemplate = require(ServerScriptService.Services.PlayerDataService.ServerDataTemplate)

@@ -7,6 +7,12 @@
         "$className": "Folder",
         "Services": {
           "$className": "Folder",
+          "CameraService": {
+            "$className": "Folder",
+            "CameraServiceClient": {
+              "$path": "src/services/CameraService/Client.luau"
+            }
+          },
           "InputService": {
             "$className": "Folder",
             "InputServiceClient": {

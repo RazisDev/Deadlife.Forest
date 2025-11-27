@@ -11,4 +11,10 @@ function ServivorRole.new(player: Player, passive)
 	return self
 end
 
+function ServivorRole:Apply()
+	self.player:SetAttribute("IsKiller", false)
+
+	print(`[Servivor Role] Applied Servivor {self.killerId} to {self.player.Name}`)
+end
+
 return ServivorRole
