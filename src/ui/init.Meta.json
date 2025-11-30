@@ -1,0 +1,6 @@
+{
+  "attributes": {
+    "ClientOnly": true
+  },
+  "tags": "LOAD_MODULE"
+}

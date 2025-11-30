@@ -6,6 +6,13 @@ realm = "shared"
 
 [dependencies]
 Roact = "roblox/roact@1.4.4"
+React = "jsdotlua/react@17.2.1"
+ReactRoblox = "jsdotlua/react-roblox@17.2.1"
+ReactRodux = "solarhorizon/react-rodux@0.2.2"
+Rodux = "roblox/rodux@3.0.0"
+FastCastRedux = "encodedvenom/fastcastredux@0.1.3"
+Sift = "csqrl/sift@0.0.11"
+
 
 [server-dependencies]
 ProfileStore = "lm-loleris/profilestore@1.0.3"
